@@ -11,6 +11,8 @@ window.App = App;
 window.world = world;
 window.matrixEngine = matrixEngine;
 function webGLStart() {
+  canvas.width = "512";
+  canvas.height = "512";
   world = matrixEngine.matrixWorld.defineworld(canvas, "simply");
   (0, _cube.runThis)(world);
   world.callReDraw();
@@ -36774,33 +36776,47 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.runThis = void 0;
 var matrixEngine = _interopRequireWildcard(require("matrix-engine"));
+var _utility = require("matrix-engine/lib/utility");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["assets/textures/1.png"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
+  _utility.scriptManager.LOAD(matrixEngine.buildinShaders.shaderTest(), "custom-myShader-shader-fs", "x-shader/x-fragment", "shaders", () => {
+    App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-myShader' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+  });
+  App.scene.MyCubeTex.type = "custom-";
+  // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
   App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
+  App.scene.MyCubeTex.addExtraDrawCode = function (world, object) {
+    now = Date.now();
+    now *= 0.00001;
+    const elapsedTime = Math.min(now - then1, 0.1);
+    time1 += elapsedTime;
+    then1 = time1;
+    // world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    // world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.matrixSkyRad, App.scene.MyCubeTex.MY_RAD);
+  };
+  App.scene.ToyShader.drawCustom = function (o) {
+    return standardMatrixEngineShader(o);
+  };
 
   // GOOD
-  App.updateBeforeDraw.push({
-    UPDATE: () => {
-      App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
-      App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
-    }
-  });
-
-  // BAD
-  // setInterval(function () {
-  // App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
-  // App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
-  // }, 10);
+  // App.updateBeforeDraw.push({
+  //   UPDATE: () => {
+  //     App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
+  //     App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
+  //   }
+  // });
 };
 exports.runThis = runThis;
 
-},{"matrix-engine":9}]},{},[1]);
+},{"matrix-engine":9,"matrix-engine/lib/utility":36}]},{},[1]);

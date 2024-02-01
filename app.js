@@ -8,6 +8,8 @@ window.world = world;
 window.matrixEngine = matrixEngine;
 
 function webGLStart() {
+  canvas.width = "512";
+  canvas.height = "512";
   world = matrixEngine.matrixWorld.defineworld(canvas, "simply");
   runThis(world);
   world.callReDraw();
