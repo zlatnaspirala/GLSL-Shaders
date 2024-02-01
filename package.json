@@ -1,0 +1,33 @@
+{
+  "name": "glsl-shaders",
+  "version": "1.0.0",
+  "description": "Free GLSL Shaders",
+  "main": "index.js",
+  "scripts": {
+    "app": "watchify App.js -p [esmify --noImplicitAny] -o build/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zlatnaspirala/GLSL-Shaders.git"
+  },
+  "keywords": [
+    "glsl",
+    "shaders",
+    "matrix-engine"
+  ],
+  "author": "Nikola Lukic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zlatnaspirala/GLSL-Shaders/issues"
+  },
+  "homepage": "https://github.com/zlatnaspirala/GLSL-Shaders#readme",
+  "dependencies": {
+    "matrix-engine": "^1.9.50"
+  },
+  "devDependencies": {
+    "browser-resolve": "^2.0.0",
+    "browserify": "^17.0.0",
+    "esmify": "^2.1.1",
+    "watchify": "^4.0.0"
+  }
+}
