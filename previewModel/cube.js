@@ -52,7 +52,9 @@ export var runThis = (world, shaderPath) => {
   })
 
   App.scene.MyCubeTex.type = "custom-";
-  // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);toyShaderHeader
+
+  var osc_variable = new OSCILLATOR(1, 300, 0.04);
+
   App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
   var now = 1, time1 = 0, then1 = 0;
@@ -65,7 +67,6 @@ export var runThis = (world, shaderPath) => {
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
-    // world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
   }
   App.scene.MyCubeTex.drawCustom = function(o) {

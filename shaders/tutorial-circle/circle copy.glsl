@@ -1,5 +1,4 @@
-
-export var shaderCircle = () => {return `#version 300 es
+#version 300 es
 precision highp float;
 // Standard matrix-engine params
 in vec2 vTextureCoord;
@@ -42,5 +41,4 @@ void main() {
   vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1, 1, 1, 1);
   mainImage(outColor, gl_FragCoord.xy);
   outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
-}`
 }

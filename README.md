@@ -9,6 +9,7 @@ Corresponding with the project matrix-engine.
 ## Hot to start
 Use BASICS.md for begginers.
 WebGL engine used for rendering: matrix-engine based on glmatrix library.
+[1.9.53] Matrix engine support direct load glsl file format.
 
 First time only:
 ```js
