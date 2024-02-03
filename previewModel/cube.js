@@ -10,7 +10,7 @@ export var runThis = world => {
 
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
   // load direct from glsl file.
-  var promiseMyShader = scriptManager.loadGLSL('../shaders/tutorial-circle/circle.glsl')
+  var promiseMyShader = scriptManager.loadGLSL('shaders/tutorial-circle/circle.glsl')
   promiseMyShader.then((d) => {
     scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
       App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
@@ -28,14 +28,14 @@ export var runThis = world => {
     const elapsedTime = Math.min(now - then1, 0.1);
     time1 += elapsedTime;
     then1 = time1;
-    // world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
-    // world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     // world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
-    // world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
-    // world.GL.gl.uniform1f(object.shaderProgram.matrixSkyRad, App.scene.MyCubeTex.MY_RAD);
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
   }
-  App.scene.ToyShader.drawCustom = function(o) {
-    return standardMatrixEngineShader(o);
+  App.scene.MyCubeTex.drawCustom = function(o) {
+    return matrixEngine.standardMEShaderDrawer(o);
   }
 
   // GOOD
