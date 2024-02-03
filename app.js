@@ -20,7 +20,7 @@ function webGLStart() {
   byId('MYHOLDER').append(byId('canvas'))
 
   world.callReDraw();
-  runThis(world, 'shaders/tutorial-circle/circle-blur.glsl');
+  runThis(world, 'shaders/tutorial-circle/circle-two.glsl');
 }
 
 window.addEventListener("load", () => {

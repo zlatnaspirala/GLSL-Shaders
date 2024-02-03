@@ -20,7 +20,7 @@ function webGLStart() {
   (0, _utility.byId)('canvas').style.position = 'unset';
   (0, _utility.byId)('MYHOLDER').append((0, _utility.byId)('canvas'));
   world.callReDraw();
-  (0, _cube.runThis)(world, 'shaders/tutorial-circle/circle-blur.glsl');
+  (0, _cube.runThis)(world, 'shaders/tutorial-circle/circle-two.glsl');
 }
 window.addEventListener("load", () => {
   matrixEngine.Engine.initApp(webGLStart);
@@ -37461,6 +37461,9 @@ var runThis = (world, shaderPath) => {
 
         // add own uniforms...
         App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
+        App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
+        App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
+        App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
         setTimeout(() => {
           PREVENT_DOUBLE_CLICK = false;
           (0, _utility.byId)('compileBtn').disabled = false;
@@ -37473,15 +37476,24 @@ var runThis = (world, shaderPath) => {
   promiseMyShader.then(d => {
     _utility.scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
       App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+
+      // add own uniforms...
+      App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
+      App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
+      App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
+      App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
     });
     (0, _utility.byId)('myShader').value = d;
   });
 
   // IMPORTANT - override draw func for `App.scene.MyCubeTex`.
   App.scene.MyCubeTex.type = "custom-";
-  var osc_variable = new OSCILLATOR(1, 300, 1.4);
-  App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
-  App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
+  var osc_r = new OSCILLATOR(0, 2, 0.001);
+  var osc_g = new OSCILLATOR(0, 1, 0.001);
+  var osc_b = new OSCILLATOR(0, 0.5, 0.0001);
+  App.scene.MyCubeTex.glBlend.blendEnabled = true;
+  App.scene.MyCubeTex.rotation.rotationSpeed.y = 10;
+  App.scene.MyCubeTex.LightsData.ambientLight.set(1, 1, 1);
   var now = 1,
     time1 = 0,
     then1 = 0;
@@ -37497,7 +37509,11 @@ var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, App.sys.MOUSE.PRESS != false ? 1 : 0);
-    world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE());
+    // world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE())
+
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE());
   };
   App.scene.MyCubeTex.drawCustom = function (o) {
     return matrixEngine.standardMEShaderDrawer(o);
