@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/zlatnaspirala/GLSL-Shaders#readme",
   "dependencies": {
-    "matrix-engine": "^1.9.50"
+    "matrix-engine": "^1.9.53"
   },
   "devDependencies": {
     "browser-resolve": "^2.0.0",

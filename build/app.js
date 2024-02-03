@@ -36786,8 +36786,12 @@ var runThis = world => {
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  _utility.scriptManager.LOAD(matrixEngine.buildinShaders.shaderTest(), "custom-myShader-shader-fs", "x-shader/x-fragment", "shaders", () => {
-    App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-myShader' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+  // load direct from glsl file.
+  var promiseMyShader = _utility.scriptManager.loadGLSL('../shaders/tutorial-circle/circle.glsl');
+  promiseMyShader.then(d => {
+    _utility.scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    });
   });
   App.scene.MyCubeTex.type = "custom-";
   // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);

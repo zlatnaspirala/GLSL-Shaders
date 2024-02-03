@@ -1,7 +1,6 @@
 import * as matrixEngine from "matrix-engine";
 import {scriptManager} from "matrix-engine/lib/utility";
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
- 
 
 export var runThis = world => {
   var textuteImageSamplers = {
@@ -10,9 +9,12 @@ export var runThis = world => {
   };
 
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-
-  scriptManager.LOAD(matrixEngine.buildinShaders.shaderTest(), "custom-myShader-shader-fs", "x-shader/x-fragment", "shaders", () => {
-    App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-myShader' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+  // load direct from glsl file.
+  var promiseMyShader = scriptManager.loadGLSL('../shaders/tutorial-circle/circle.glsl')
+  promiseMyShader.then((d) => {
+    scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    })
   })
 
   App.scene.MyCubeTex.type = "custom-";
@@ -20,7 +22,7 @@ export var runThis = world => {
   App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
 
-  App.scene.MyCubeTex.addExtraDrawCode = function (world, object) {
+  App.scene.MyCubeTex.addExtraDrawCode = function(world, object) {
     now = Date.now();
     now *= 0.00001;
     const elapsedTime = Math.min(now - then1, 0.1);
@@ -32,7 +34,7 @@ export var runThis = world => {
     // world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     // world.GL.gl.uniform1f(object.shaderProgram.matrixSkyRad, App.scene.MyCubeTex.MY_RAD);
   }
-  App.scene.ToyShader.drawCustom = function (o) {
+  App.scene.ToyShader.drawCustom = function(o) {
     return standardMatrixEngineShader(o);
   }
 
