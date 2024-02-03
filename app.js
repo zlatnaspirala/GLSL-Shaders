@@ -16,7 +16,7 @@ function webGLStart() {
 
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  runThis(world, 'shaders/tutorial-circle/circle.glsl');
+  runThis(world, 'shaders/tutorial-circle/circle-base.glsl');
 }
 
 window.addEventListener("load", () => {

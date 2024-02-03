@@ -15,7 +15,7 @@ export var runThis = (world, shaderPath) => {
       matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.b =
       matrixEngine.utility.randomFloatFromTo(0, 2);
-    // console.info(e.detail);
+     console.info(e.detail);
   });
 
   var textuteImageSamplers = {
@@ -51,6 +51,7 @@ export var runThis = (world, shaderPath) => {
     byId('myShader').value = d;
   })
 
+  // IMPORTANT - override draw func for `App.scene.MyCubeTex`.
   App.scene.MyCubeTex.type = "custom-";
 
   var osc_variable = new OSCILLATOR(1, 300, 0.04);
@@ -58,17 +59,21 @@ export var runThis = (world, shaderPath) => {
   App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
   var now = 1, time1 = 0, then1 = 0;
+
   App.scene.MyCubeTex.addExtraDrawCode = function(world, object) {
     now = Date.now();
     now *= 0.00001;
     const elapsedTime = Math.min(now - then1, 0.1);
     time1 += elapsedTime;
     then1 = time1;
+
+    // Engine loads resolutionLocation, TimeDelta ... 
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
   }
+
   App.scene.MyCubeTex.drawCustom = function(o) {
     return matrixEngine.standardMEShaderDrawer(o);
   }
