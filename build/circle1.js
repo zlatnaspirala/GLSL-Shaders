@@ -37446,6 +37446,13 @@ var runThis = (world, shaderPath) => {
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
+  (0, _utility.byId)('compileBtn').addEventListener('click', () => {
+    (0, _utility.byId)('custom-circle-shader-fs').remove();
+    console.log((0, _utility.byId)('myShader').value);
+    _utility.scriptManager.LOAD((0, _utility.byId)('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    });
+  });
   // load direct from glsl file.
   var promiseMyShader = _utility.scriptManager.loadGLSL(shaderPath);
   promiseMyShader.then(d => {
