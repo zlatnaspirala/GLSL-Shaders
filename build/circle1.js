@@ -37446,12 +37446,21 @@ var runThis = (world, shaderPath) => {
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
+  var PREVENT_DOUBLE_CLICK = false;
   (0, _utility.byId)('compileBtn').addEventListener('click', () => {
-    (0, _utility.byId)('custom-circle-shader-fs').remove();
-    console.log((0, _utility.byId)('myShader').value);
-    _utility.scriptManager.LOAD((0, _utility.byId)('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
-    });
+    if ((0, _utility.byId)('compileBtn').disabled == false) {
+      PREVENT_DOUBLE_CLICK = true;
+      (0, _utility.byId)('compileBtn').disabled = true;
+      (0, _utility.byId)('custom-circle-shader-fs').remove();
+      console.log("");
+      _utility.scriptManager.LOAD((0, _utility.byId)('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
+        App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+        setTimeout(() => {
+          PREVENT_DOUBLE_CLICK = false;
+          (0, _utility.byId)('compileBtn').disabled = false;
+        }, 1000);
+      });
+    } else {}
   });
   // load direct from glsl file.
   var promiseMyShader = _utility.scriptManager.loadGLSL(shaderPath);

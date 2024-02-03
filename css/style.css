@@ -1,0 +1,100 @@
+body {
+  color: rgb(182, 238, 255);
+  background-color: black;
+  font-family: "Courier New";
+  font-size: 14px;
+  background-color: rgb(158, 84, 64);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  text-align: center;
+}
+
+textarea {
+  text-shadow: rgb(0 0 0) 1px 1px 1px;
+  font-size: larger;
+  height: 88vh;
+  color: aliceblue;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 0.4) 0%, rgba(9, 9, 121, 0.4) 35%, rgba(0, 212, 255, 0.4) 100%);
+}
+
+div {
+  width: 100%;
+}
+
+canvas {
+  position: absolute;
+  left: 31%;
+  top: 15%;
+  z-index: -1;
+}
+
+#compileBtn {
+  position: absolute;
+  top : 10px;
+  left: 10px;
+  width: 100px;
+}
+
+
+*::-webkit-media-controls-panel {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
+/* Old shadow dom for play button */
+*::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
+/* This one works! */
+*::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(102, 102, 102);
+  border-radius: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 9px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.buttonClass {
+font-size:15px;
+font-family:Arial;
+width:140px;
+height:50px;
+border-width:1px;
+color:#fff;
+border-color:#4b8f29;
+font-weight:bold;
+border-top-left-radius:4px;
+border-top-right-radius:4px;
+border-bottom-left-radius:4px;
+border-bottom-right-radius:4px;
+box-shadow: 0px 10px 14px -7px #3e7327;
+text-shadow: 0px 1px 0px #5b8a3c;
+background:linear-gradient(#77b55a, #72b352);
+}
+
+.buttonClass:disabled {
+  color: gray;
+}
+.buttonClass:hover {
+background: linear-gradient(#72b352, #77b55a);
+}

@@ -20,81 +20,7 @@
   <meta http-equiv="Cache-control" content="public">
 
   <style>
-    body {
-      color: rgb(182, 238, 255);
-      background-color: black;
-      font-family: "Courier New";
-      font-size: 14px;
-      background-color: rgb(158, 84, 64);
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    textarea {
-      text-shadow: rgb(0 0 0) 1px 1px 1px;
-      font-size: larger;
-      height: 88vh;
-      color: aliceblue;
-      background: rgb(2, 0, 36);
-      background: linear-gradient(90deg, rgba(2, 0, 36, 0.4) 0%, rgba(9, 9, 121, 0.4) 35%, rgba(0, 212, 255, 0.4) 100%);
-    }
-
-    div {
-      width: 100%;
-    }
-
-    canvas {
-      position: absolute;
-      left: 31%;
-      top: 15%;
-      z-index: -1;
-    }
-
-    #compileBtn {
-      position: absolute;
-      top : 10px;
-      left: 10px;
-      width: 100px;
-    }
-
-
-    *::-webkit-media-controls-panel {
-      display: none !important;
-      -webkit-appearance: none;
-    }
-
-    /* Old shadow dom for play button */
-    *::-webkit-media-controls-play-button {
-      display: none !important;
-      -webkit-appearance: none;
-    }
-
-    /* This one works! */
-    *::-webkit-media-controls-start-playback-button {
-      display: none !important;
-      -webkit-appearance: none;
-    }
-
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 5px rgb(102, 102, 102);
-      border-radius: 8px;
-    }
-
-    body::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: 9px;
-    }
-
-    body::-webkit-scrollbar-thumb:hover {
-      background: rgba(0, 0, 0, 0.6);
-    }
+  
   </style>
 </head>
 
@@ -102,7 +28,7 @@
   <div>
     <div style="display: flex;flex-direction: column;">
 
-      <button id="compileBtn">COMPILE</button>
+      <button id="compileBtn" class="buttonClass">COMPILE</button>
 
       <div>
         <h2>GLSL Project - Tutorial circle1</h2>
