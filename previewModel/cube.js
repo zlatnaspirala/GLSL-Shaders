@@ -34,6 +34,10 @@ export var runThis = (world, shaderPath) => {
       byId('custom-circle-shader-fs').remove();
       scriptManager.LOAD(byId('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
         App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+
+        // add own uniforms...
+        App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
+
         setTimeout(() => {
           PREVENT_DOUBLE_CLICK = false;
           byId('compileBtn').disabled = false;
@@ -54,7 +58,7 @@ export var runThis = (world, shaderPath) => {
   // IMPORTANT - override draw func for `App.scene.MyCubeTex`.
   App.scene.MyCubeTex.type = "custom-";
 
-  var osc_variable = new OSCILLATOR(1, 300, 0.04);
+  var osc_variable = new OSCILLATOR(1, 300, 1.4);
 
   App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
@@ -72,6 +76,8 @@ export var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE())
+
   }
 
   App.scene.MyCubeTex.drawCustom = function(o) {
