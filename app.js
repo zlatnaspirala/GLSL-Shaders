@@ -8,11 +8,15 @@ window.world = world;
 window.matrixEngine = matrixEngine;
 
 function webGLStart() {
-  canvas.width = "512";
-  canvas.height = "512";
-  world = matrixEngine.matrixWorld.defineworld(canvas, "simply");
-  runThis(world);
+
+  canvas.width = window.innerWidth / 100 * 31;
+  canvas.height = window.innerWidth / 100 * 31;
+
+  App.resize.canvas = 'false'
+
+  world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
+  runThis(world, 'shaders/tutorial-circle/circle.glsl');
 }
 
 window.addEventListener("load", () => {

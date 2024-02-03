@@ -3,7 +3,7 @@
 
 <head>
   <!-- <link rel="manifest" href="manifest.web"> -->
-  <title>Matrix Engine is WebGL App/Game engine based on glmatrix lib. Created by Nikola Lukic maximumroulette.com 2023</title>
+  <title>GLSL web oriented project created by Nikola Lukic maximumroulette.com 2024</title>
   <meta name="description" content="The benefits of this project is offering `not too much closed in self` and access of low level of opengles, easy native implementations (hybrid app), object structural, webrtc deeply integrated.">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link media="print" onload="this.media='all'" rel="stylesheet" href="css/style.css">
@@ -32,17 +32,91 @@
       overflow: hidden;
       text-align: center;
     }
+
+    textarea {
+      font-size: larger;
+      height: 88vh;
+      color: aliceblue;
+      background: rgb(2, 0, 36);
+      background: linear-gradient(90deg, rgba(2, 0, 36, 0.4) 0%, rgba(9, 9, 121, 0.4) 35%, rgba(0, 212, 255, 0.4) 100%);
+    }
+
+    div {
+      width: 100%;
+    }
+
+    canvas {
+      position: absolute;
+      left: 31%;
+      top: 15%;
+      z-index: -1;
+    }
+
+    #compileBtn {
+      position: absolute;
+      top : 10px;
+      left: 10px;
+      width: 100px;
+    }
+
+
+    *::-webkit-media-controls-panel {
+      display: none !important;
+      -webkit-appearance: none;
+    }
+
+    /* Old shadow dom for play button */
+    *::-webkit-media-controls-play-button {
+      display: none !important;
+      -webkit-appearance: none;
+    }
+
+    /* This one works! */
+    *::-webkit-media-controls-start-playback-button {
+      display: none !important;
+      -webkit-appearance: none;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px rgb(102, 102, 102);
+      border-radius: 8px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 9px;
+    }
+
+    body::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.6);
+    }
   </style>
 </head>
 
 <body>
+  <div>
+    <div style="display: flex;flex-direction: column;">
+
+      <button id="compileBtn">COMPILE</button>
+
+      <div>
+        <h2>GLSL Project - Tutorial circle1</h2>
+      </div>
+      <div>Origin from : <span>The MIT License - Copyright © 2020 Inigo Quilez </span></div>
+      <div>Loaded in matrix-engine webGL render. </div>
+      <textarea id="myShader"></textarea>
+    </div>
+  </div>
   <div id="shaders"></div>
   <div id="debugBox" class="debugBox"></div>
   <div id="fps" class="btnShadow debugBox">
     <button id="stopRender" type="button">stopRender</button>
     <div color="white"><b id="fps"></b></div>
   </div>
-
   <div style="display:none">
     <button class="add-button button1">
       <h1> Add to home screen </h1>
@@ -53,7 +127,6 @@
       <h2> I don't wanna full PWA just play it in regular HTML5 page.</h2>
     </button>
   </div>
-
   <div id="HOLDER_STREAMS" class="debugBox" style="display:none;position:absolute;left:-3000px;top:0px;width:512px;height:512px">
     <video id="webcam_beta" autoplay width="512" height="512" style="display:none;position:absolute;left:-200px;top:-110px;"></video>
     <audio id="audio_beta" src="#"></audio>
@@ -70,7 +143,7 @@
       <input type="range" min="1" max="5000" value="0" class="slider" id="timeline">
     </div>
   </div>
-  <script src="./build/app.js"></script>
+  <script src="./build/circle1.js"></script>
 </body>
 
 </html>

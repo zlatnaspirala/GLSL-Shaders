@@ -4,7 +4,7 @@
   "description": "Free GLSL Shaders",
   "main": "index.js",
   "scripts": {
-    "app": "watchify App.js -p [esmify --noImplicitAny] -o build/app.js"
+    "app": "watchify App.js -p [esmify --noImplicitAny] -o build/circle1.js | echo 'circle1.js build active'"
   },
   "repository": {
     "type": "git",

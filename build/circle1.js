@@ -11,8 +11,8 @@ window.App = App;
 window.world = world;
 window.matrixEngine = matrixEngine;
 function webGLStart() {
-  canvas.width = "512";
-  canvas.height = "512";
+  canvas.width = window.innerWidth / 100 * 31;
+  canvas.height = window.innerWidth / 100 * 31;
   App.resize.canvas = 'false';
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
@@ -37452,6 +37452,7 @@ var runThis = (world, shaderPath) => {
     _utility.scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
       App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
     });
+    (0, _utility.byId)('myShader').value = d;
   });
   App.scene.MyCubeTex.type = "custom-";
   // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);toyShaderHeader

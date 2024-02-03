@@ -1,8 +1,23 @@
 import * as matrixEngine from "matrix-engine";
-import {scriptManager} from "matrix-engine/lib/utility";
+import {byId, scriptManager} from "matrix-engine/lib/utility";
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
-export var runThis = world => {
+export var runThis = (world, shaderPath) => {
+
+  canvas.addEventListener('mousedown', (ev) => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+
+  addEventListener("ray.hit.event", function(e) {
+    e.detail.hitObject.LightsData.ambientLight.r =
+      matrixEngine.utility.randomFloatFromTo(0, 2);
+    e.detail.hitObject.LightsData.ambientLight.g =
+      matrixEngine.utility.randomFloatFromTo(0, 2);
+    e.detail.hitObject.LightsData.ambientLight.b =
+      matrixEngine.utility.randomFloatFromTo(0, 2);
+    // console.info(e.detail);
+  });
+
   var textuteImageSamplers = {
     source: ["assets/textures/1.png"],
     mix_operation: "multiply",
@@ -10,18 +25,20 @@ export var runThis = world => {
 
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
   // load direct from glsl file.
-  var promiseMyShader = scriptManager.loadGLSL('shaders/tutorial-circle/circle.glsl')
+  var promiseMyShader = scriptManager.loadGLSL(shaderPath)
   promiseMyShader.then((d) => {
     scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
       App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
     })
+
+    byId('myShader').value = d;
   })
 
   App.scene.MyCubeTex.type = "custom-";
-  // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
+  // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);toyShaderHeader
   App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
-
+  var now = 1, time1 = 0, then1 = 0;
   App.scene.MyCubeTex.addExtraDrawCode = function(world, object) {
     now = Date.now();
     now *= 0.00001;
