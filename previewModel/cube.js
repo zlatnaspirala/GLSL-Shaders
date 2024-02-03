@@ -28,12 +28,10 @@ export var runThis = (world, shaderPath) => {
   var PREVENT_DOUBLE_CLICK = false;
 
   byId('compileBtn').addEventListener('click', () => {
-
-    if(byId('compileBtn').disabled == false ) {
+    if(byId('compileBtn').disabled == false) {
       PREVENT_DOUBLE_CLICK = true;
       byId('compileBtn').disabled = true;
       byId('custom-circle-shader-fs').remove();
-      console.log( "" )
       scriptManager.LOAD(byId('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
         App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
         setTimeout(() => {
@@ -41,11 +39,7 @@ export var runThis = (world, shaderPath) => {
           byId('compileBtn').disabled = false;
         }, 1000)
       })
-    } else {
-
     }
-
-
   })
   // load direct from glsl file.
   var promiseMyShader = scriptManager.loadGLSL(shaderPath)

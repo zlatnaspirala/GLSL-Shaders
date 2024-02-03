@@ -1,4 +1,4 @@
-# GLSL-Shaders [wip]
+# GLSL-Shaders Editor [wip]
 Build shaders from zero. Prefered webGL2/opengles300
 Web oriented project.
 Corresponding with the project matrix-engine.
@@ -19,6 +19,9 @@ Watch also build with:
 ```js
 npm run app
 ```
+
+## Public link
+ - https://maximumroulette.com/apps/glsl-editor/
 
 ## Licence
  Nikola Lukic zlatnaspirala@gmail.com
