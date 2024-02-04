@@ -11,6 +11,9 @@ uniform float iTimeDelta;
 uniform vec3 iMouse;
 
 uniform float iXXX;
+uniform float iR;
+uniform float iG;
+uniform float iB;
 
 out vec4 outColor;
 
@@ -20,20 +23,19 @@ float sdCircle(in vec2 p, in float r) {
 
 void mainImage(out vec4 outColor, in vec2 fragCoord) {
   vec2 p = (2.0f * fragCoord - iResolution.xy) / iResolution.y;
-  vec2 m = (2.0f * iMouse.xy - iResolution.xy) / iResolution.y;
-  float d = sdCircle(p, 0.5f);
+  float d = sdCircle(p, 0.6f);
+  float d2 = sdCircle(p, 0.12f);
+
   // coloring
-  vec3 col = (d > 0.0f) ? vec3(0.9f, 0.6f, 0.3f) : vec3(0.65f, 0.85f, 1.0f);
+  vec3 col = (d2 > 0.0f) ? vec3(iR, iR, iR) : vec3(iR, iG, iB);
+  col = (d > 0.0f) ? vec3(iG, iB, iR) : vec3(iB, iG, iB);
 
-  // addind waves - iXXX is OSC[from1 to 150 step 1]
-  col *= 0.8f + 0.2f * cos(iXXX * d);
+  col *= 1.0f - exp(-iXXX * abs(d));
+  col *= 1.0f - exp(-iXXX * abs(d2));
 
-  col *= 1.0f - exp(-6.0f * abs(d));
   outColor = vec4(col, 1.0f);
 }
 
 void main() {
-  vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1, 1, 1, 1);
   mainImage(outColor, gl_FragCoord.xy);
-  outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
 }

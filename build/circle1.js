@@ -37454,6 +37454,8 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = (world, shaderPath) => {
   App.loadCircleBase = shaderPath => {
+    console.log("audios");
+    document.getElementById('hoverFX').play();
     // load direct from glsl file.
     if ((0, _utility.byId)('custom-circle-shader-fs')) (0, _utility.byId)('custom-circle-shader-fs').remove();
     var promiseMyShader = _utility.scriptManager.loadGLSL(shaderPath);
@@ -37479,15 +37481,13 @@ var runThis = (world, shaderPath) => {
     e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2);
     console.info(e.detail);
   });
-  var textuteImageSamplers = {
+  world.Add("cubeLightTex", 1, "MyCubeTex", {
     source: ["assets/textures/1.png"],
     mix_operation: "multiply"
-  };
-  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  var PREVENT_DOUBLE_CLICK = false;
+  });
   (0, _utility.byId)('compileBtn').addEventListener('click', () => {
     if ((0, _utility.byId)('compileBtn').disabled == false) {
-      PREVENT_DOUBLE_CLICK = true;
+      document.getElementById('hoverFX').play();
       (0, _utility.byId)('compileBtn').disabled = true;
       (0, _utility.byId)('custom-circle-shader-fs').remove();
       _utility.scriptManager.LOAD((0, _utility.byId)('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
@@ -37499,9 +37499,8 @@ var runThis = (world, shaderPath) => {
         App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
         setTimeout(() => {
-          PREVENT_DOUBLE_CLICK = false;
           (0, _utility.byId)('compileBtn').disabled = false;
-        }, 1000);
+        }, 1600);
       });
     }
   });
@@ -37512,6 +37511,7 @@ var runThis = (world, shaderPath) => {
   var osc_r = new OSCILLATOR(0, 2, 0.001);
   var osc_g = new OSCILLATOR(0, 1, 0.001);
   var osc_b = new OSCILLATOR(0, 0.5, 0.0001);
+  var osc_variable = new OSCILLATOR(0, 150, 1);
   App.scene.MyCubeTex.glBlend.blendEnabled = true;
   App.scene.MyCubeTex.rotation.rotationSpeed.y = 10;
   App.scene.MyCubeTex.LightsData.ambientLight.set(1, 1, 1);
@@ -37530,8 +37530,7 @@ var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, App.sys.MOUSE.PRESS != false ? 1 : 0);
-    // world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE())
-
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE());

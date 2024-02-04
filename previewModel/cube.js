@@ -5,6 +5,8 @@ let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 export var runThis = (world, shaderPath) => {
 
   App.loadCircleBase = (shaderPath) => {
+    console.log("audios")
+    document.getElementById('hoverFX').play()
     // load direct from glsl file.
     if (byId('custom-circle-shader-fs')) byId('custom-circle-shader-fs').remove();
     var promiseMyShader = scriptManager.loadGLSL(shaderPath)
@@ -15,13 +17,13 @@ export var runThis = (world, shaderPath) => {
 
         // add own uniforms...
         App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
-
         App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
         App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
 
       })
       byId('myShader').value = d;
+      
     })
   }
 
@@ -39,18 +41,15 @@ export var runThis = (world, shaderPath) => {
     console.info(e.detail);
   });
 
-  var textuteImageSamplers = {
+
+  world.Add("cubeLightTex", 1, "MyCubeTex", {
     source: ["assets/textures/1.png"],
     mix_operation: "multiply",
-  };
-
-  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-
-  var PREVENT_DOUBLE_CLICK = false;
+  });
 
   byId('compileBtn').addEventListener('click', () => {
     if(byId('compileBtn').disabled == false) {
-      PREVENT_DOUBLE_CLICK = true;
+      document.getElementById('hoverFX').play()
       byId('compileBtn').disabled = true;
       byId('custom-circle-shader-fs').remove();
       scriptManager.LOAD(byId('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
@@ -64,16 +63,13 @@ export var runThis = (world, shaderPath) => {
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
 
         setTimeout(() => {
-          PREVENT_DOUBLE_CLICK = false;
           byId('compileBtn').disabled = false;
-        }, 1000)
+        }, 1600)
       })
     }
   })
 
   App.loadCircleBase(shaderPath)
-
-
 
   // IMPORTANT - override draw func for `App.scene.MyCubeTex`.
   App.scene.MyCubeTex.type = "custom-";
@@ -81,6 +77,7 @@ export var runThis = (world, shaderPath) => {
   var osc_r = new OSCILLATOR(0, 2, 0.001);
   var osc_g = new OSCILLATOR(0, 1, 0.001);
   var osc_b = new OSCILLATOR(0, 0.5, 0.0001);
+  var osc_variable = new OSCILLATOR(0, 150, 1);
 
   App.scene.MyCubeTex.glBlend.blendEnabled = true
   App.scene.MyCubeTex.rotation.rotationSpeed.y = 10;
@@ -99,7 +96,8 @@ export var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
-    // world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE())
+    
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE())
 
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE())
     world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE())
