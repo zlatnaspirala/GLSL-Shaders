@@ -5,8 +5,8 @@ let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 export var runThis = (world, shaderPath) => {
 
   App.loadCircleBase = (shaderPath) => {
-    console.log("audios")
-    document.getElementById('hoverFX').play()
+    console.log("audios 2")
+    // var p = document.getElementById('hoverFX').play()
     // load direct from glsl file.
     if (byId('custom-circle-shader-fs')) byId('custom-circle-shader-fs').remove();
     var promiseMyShader = scriptManager.loadGLSL(shaderPath)
@@ -49,7 +49,7 @@ export var runThis = (world, shaderPath) => {
 
   byId('compileBtn').addEventListener('click', () => {
     if(byId('compileBtn').disabled == false) {
-      document.getElementById('hoverFX').play()
+      var p = document.getElementById('hoverFX').play();
       byId('compileBtn').disabled = true;
       byId('custom-circle-shader-fs').remove();
       scriptManager.LOAD(byId('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {

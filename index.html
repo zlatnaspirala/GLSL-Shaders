@@ -30,7 +30,7 @@
       </div>
       <div><span>The MIT License - Copyright © 2024 Nikola Lukic </span></div>
       <div>Loaded in matrix-engine webGL render. </div>
-      <div>Current example origin from The MIT License - Copyright © 2020 Inigo Quilez </div>
+      <div>Origin code - The MIT License - Copyright © 2020 Inigo Quilez </div>
       <div style="display: block;width: 400px;">
         <audio id="hoverFX" controls style="display: none;">
           <source src="assets/audios/click.mp3" type="audio/mpeg" />
@@ -38,21 +38,30 @@
           Your browser does not support the audio element.
         </audio>
       </div>
-      <div style="display: grid;">
-        <button onclick="dropShaderList()" class="dropbtn">Select shader</button>
-        <div id="myDropdown" class="dropdown-content">
-          <span class="dropbtn" onmouseover="" onclick="document.getElementById('hoverFX').play();App.loadCircleBase('shaders/tutorial-circle/circle-base.glsl')">Circle base</span>
-          <span class="dropbtn" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-blur.glsl')">Circle blur</span>
-          <span class="dropbtn" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-two.glsl')">Circle Two</span>
-          <span class="dropbtn" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-pulse.glsl')">Circle Pulse colors</span>
-          <span class="dropbtn" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-base-color.glsl')">Circle base color</span>
-          <span class="dropbtn" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-lines/half-circle.glsl')">Half Circle C</span>
-          <span class="dropbtn" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-lines/half-circle-double.glsl')">Half Circle C Double</span>
-          <span class="dropbtn" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-lines/line.glsl')">Line</span>
-
+      <div style="display: flex;flex-direction:row;">
+        <div style="display: grid;">
+          <button onclick="dropShaderList(1)" class="dropbtn1">Select shader</button>
+          <div id="myDropdown1" class="dropdown-content1">
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-base.glsl')">Circle base</span>
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-blur.glsl')">Circle blur</span>
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-two.glsl')">Circle Two</span>
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-pulse.glsl')">Circle Pulse colors</span>
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-base-color.glsl')">Circle base color</span>
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-lines/half-circle.glsl')">Half Circle C</span>
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-lines/half-circle-double.glsl')">Half Circle C Double</span>
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-lines/line.glsl')">Line</span>
+            <span class="dropbtn1" onmouseover="" onclick="App.loadCircleBase('shaders/tutorial-lines/colored-lines.glsl')">Colored Line</span>
+          </div>
         </div>
-      </div>
+        <div style="display: grid;">
+          <button onclick="dropShaderList(2)" class="dropbtn2">More</button>
+          <div id="myDropdown2" class="dropdown-content2">
+            <span class="dropbtn2" onmouseover="" onclick="App.scene.MyCubeTex.glBlend.blendEnabled=!App.scene.MyCubeTex.glBlend.blendEnabled;">Blending</span>
+            <span class="dropbtn2" onmouseover="" onclick="alert(`The MIT License - Copyright © 2024 Nikola Lukic \n Loaded in matrix-engine webGL render. Tutorial Origin from The MIT License - Copyright © 2020 Inigo Quilez.`)">About</span>
+          </div>
+        </div>
 
+      </div>
       <div id="MYHOLDER" style="display: flex;flex-direction: row;">
         <textarea id="myShader"></textarea>
       </div>

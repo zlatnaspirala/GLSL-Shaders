@@ -21,14 +21,24 @@ function webGLStart() {
   (0, _utility.byId)('MYHOLDER').append((0, _utility.byId)('canvas'));
   world.callReDraw();
   (0, _cube.runThis)(world, 'shaders/tutorial-circle/circle-two.glsl');
-  window.dropShaderList = () => {
-    document.getElementById("myDropdown").classList.toggle("show");
+  window.dropShaderList = a => {
+    document.getElementById("myDropdown" + a).classList.toggle("show");
   };
 
   // Close the dropdown menu if the user clicks outside of it
   window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
+    if (!event.target.matches('.dropbtn1')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content1");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+    if (!event.target.matches('.dropbtn2')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content2");
       var i;
       for (i = 0; i < dropdowns.length; i++) {
         var openDropdown = dropdowns[i];
@@ -37454,8 +37464,8 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = (world, shaderPath) => {
   App.loadCircleBase = shaderPath => {
-    console.log("audios");
-    document.getElementById('hoverFX').play();
+    console.log("audios 2");
+    // var p = document.getElementById('hoverFX').play()
     // load direct from glsl file.
     if ((0, _utility.byId)('custom-circle-shader-fs')) (0, _utility.byId)('custom-circle-shader-fs').remove();
     var promiseMyShader = _utility.scriptManager.loadGLSL(shaderPath);
@@ -37487,7 +37497,7 @@ var runThis = (world, shaderPath) => {
   });
   (0, _utility.byId)('compileBtn').addEventListener('click', () => {
     if ((0, _utility.byId)('compileBtn').disabled == false) {
-      document.getElementById('hoverFX').play();
+      var p = document.getElementById('hoverFX').play();
       (0, _utility.byId)('compileBtn').disabled = true;
       (0, _utility.byId)('custom-circle-shader-fs').remove();
       _utility.scriptManager.LOAD((0, _utility.byId)('myShader').value, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
