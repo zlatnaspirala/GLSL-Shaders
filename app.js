@@ -20,7 +20,7 @@ function webGLStart() {
   byId('MYHOLDER').append(byId('canvas'))
 
   world.callReDraw();
-  runThis(world, 'shaders/tutorial-circle/circle-two.glsl');
+  runThis(world, 'shaders/tutorial-lines/char-a.glsl');
 
   window.dropShaderList = (a) => {
     document.getElementById("myDropdown" + a).classList.toggle("show");

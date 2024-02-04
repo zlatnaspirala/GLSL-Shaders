@@ -20,7 +20,7 @@ function webGLStart() {
   (0, _utility.byId)('canvas').style.position = 'unset';
   (0, _utility.byId)('MYHOLDER').append((0, _utility.byId)('canvas'));
   world.callReDraw();
-  (0, _cube.runThis)(world, 'shaders/tutorial-circle/circle-two.glsl');
+  (0, _cube.runThis)(world, 'shaders/tutorial-lines/char-a.glsl');
   window.dropShaderList = a => {
     document.getElementById("myDropdown" + a).classList.toggle("show");
   };
