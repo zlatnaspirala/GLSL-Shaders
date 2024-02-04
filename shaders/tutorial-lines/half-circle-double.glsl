@@ -81,7 +81,7 @@ void mainImage(out vec4 outColor, in vec2 fragCoord) {
       float d2 = dg2.x;
       vec2 g2 = dg2.yz;
 
-        // coloring
+      // coloring
       vec3 col = (d > 0.0f) ? vec3(0.9f, 0.6f, 0.3f) : vec3(0.4f, 0.7f, 0.85f);
       col *= 1.0f + vec3(0.5f * g, 0.0f);
         // col = vec3(0.5+0.5*g,1.0);
