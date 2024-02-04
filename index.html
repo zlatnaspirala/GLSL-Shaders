@@ -29,6 +29,15 @@
       <div><span>The MIT License - Copyright © 2024 Nikola Lukic </span></div>
       <div>Loaded in matrix-engine webGL render. </div>
       <div>Current example origin from The MIT License - Copyright © 2020 Inigo Quilez </div>
+      <div style="display: grid;">
+        <button onclick="dropShaderList()" class="dropbtn">Select shader</button>
+        <div id="myDropdown" class="dropdown-content">
+          <span class="dropbtn" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-base.glsl')">Circle base</span>
+          <span class="dropbtn" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-blur.glsl')">Circle blur</span>
+          <span class="dropbtn" onclick="App.loadCircleBase('shaders/tutorial-circle/circle-two.glsl')">Circle Two</span>
+        </div>
+      </div>
+
       <div id="MYHOLDER" style="display: flex;flex-direction: row;">
       <textarea id="myShader"></textarea>
       </div>

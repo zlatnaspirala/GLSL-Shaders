@@ -27,7 +27,7 @@ void mainImage(out vec4 outColor, in vec2 fragCoord) {
   vec2 p = (2.0f * fragCoord - iResolution.xy) / iResolution.y;
 
   float d = sdCircle(p, 0.5f);
-  vec3 col = (d > 0.0f) ? vec3(iR, iG, iB) : vec3(iB, iG, iR);
+  vec3 col = (d > 0.0f) ? vec3(iR, iB, iB) : vec3(iB, iG, iR);
   col *= 1.0f - exp(-6.0f * abs(d));
 
   outColor = vec4(col, 1.0f);

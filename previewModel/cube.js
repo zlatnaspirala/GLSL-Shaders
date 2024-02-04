@@ -4,6 +4,27 @@ let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
 export var runThis = (world, shaderPath) => {
 
+  App.loadCircleBase = (shaderPath) => {
+    // load direct from glsl file.
+    if (byId('custom-circle-shader-fs')) byId('custom-circle-shader-fs').remove();
+    var promiseMyShader = scriptManager.loadGLSL(shaderPath)
+    
+    promiseMyShader.then((d) => {
+      scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
+        App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+
+        // add own uniforms...
+        App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
+
+        App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
+        App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
+        App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
+
+      })
+      byId('myShader').value = d;
+    })
+  }
+
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -49,23 +70,10 @@ export var runThis = (world, shaderPath) => {
       })
     }
   })
-  // load direct from glsl file.
-  var promiseMyShader = scriptManager.loadGLSL(shaderPath)
-  promiseMyShader.then((d) => {
-    scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
 
-      // add own uniforms...
-      App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
+  App.loadCircleBase(shaderPath)
 
-      App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
-      App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
-      App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
 
-    })
-
-    byId('myShader').value = d;
-  })
 
   // IMPORTANT - override draw func for `App.scene.MyCubeTex`.
   App.scene.MyCubeTex.type = "custom-";
@@ -96,9 +104,6 @@ export var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE())
     world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE())
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE())
-
-
-
   }
 
   App.scene.MyCubeTex.drawCustom = function(o) {

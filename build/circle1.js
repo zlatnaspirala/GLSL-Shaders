@@ -21,6 +21,23 @@ function webGLStart() {
   (0, _utility.byId)('MYHOLDER').append((0, _utility.byId)('canvas'));
   world.callReDraw();
   (0, _cube.runThis)(world, 'shaders/tutorial-circle/circle-two.glsl');
+  window.dropShaderList = () => {
+    document.getElementById("myDropdown").classList.toggle("show");
+  };
+
+  // Close the dropdown menu if the user clicks outside of it
+  window.onclick = function (event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  };
 }
 window.addEventListener("load", () => {
   matrixEngine.Engine.initApp(webGLStart);
@@ -37436,6 +37453,23 @@ function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return 
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = (world, shaderPath) => {
+  App.loadCircleBase = shaderPath => {
+    // load direct from glsl file.
+    if ((0, _utility.byId)('custom-circle-shader-fs')) (0, _utility.byId)('custom-circle-shader-fs').remove();
+    var promiseMyShader = _utility.scriptManager.loadGLSL(shaderPath);
+    promiseMyShader.then(d => {
+      _utility.scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
+        App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+
+        // add own uniforms...
+        App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
+        App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
+        App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
+        App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
+      });
+      (0, _utility.byId)('myShader').value = d;
+    });
+  };
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -37471,20 +37505,7 @@ var runThis = (world, shaderPath) => {
       });
     }
   });
-  // load direct from glsl file.
-  var promiseMyShader = _utility.scriptManager.loadGLSL(shaderPath);
-  promiseMyShader.then(d => {
-    _utility.scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
-
-      // add own uniforms...
-      App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
-      App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
-      App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
-      App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
-    });
-    (0, _utility.byId)('myShader').value = d;
-  });
+  App.loadCircleBase(shaderPath);
 
   // IMPORTANT - override draw func for `App.scene.MyCubeTex`.
   App.scene.MyCubeTex.type = "custom-";
