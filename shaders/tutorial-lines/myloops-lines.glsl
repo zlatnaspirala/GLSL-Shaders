@@ -38,17 +38,12 @@ void main() {
   vec3 color = vec3(1.0f, 0.2f, 1.0f);
   // float sum = 0.0f;
   for(float i = 0.0f; i < 1.0f; i=i+0.02f) {
-    vec2 p1 = vec2(-0.5f + iG + i*2.0, 0.0f);
-    vec2 p2 = vec2(-0.5f + iG + i*2.0,  1.f );
+    vec2 p1 = vec2(-0.5f + iG + i*1.0, 0.0f);
+    vec2 p2 = vec2(-0.5f + iG + i*1.0,  1.f );
     float line = line(uv, p1, p2, iResolution.xy);
     outColor += vec4(color * line, 1.f);
-    if(i >= 3.0f) {
-      break;
-    }
+    if(i >= 3.0f) { break; }
   }
-  // outColor = vec4(color * lineFactor, 1.f);
-  // outColor += vec4(color * lineFactor1, 1.f);
-  // outColor.rgb *= color * lineFactor1;
   vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1, 1, 1, 1);
-    outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
+  outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
 }
