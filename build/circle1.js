@@ -28,7 +28,7 @@ function webGLStart() {
     }
   }, false);
   world.callReDraw();
-  (0, _cube.runThis)(world, 'shaders/tutorial-lines/simple-lines.glsl');
+  (0, _cube.runThis)(world, 'shaders/tutorial-lines/myloops-lines.glsl');
   window.dropShaderList = a => {
     document.getElementById("myDropdown" + a).classList.toggle("show");
   };

@@ -23,7 +23,6 @@ float line(vec2 uv, vec2 pt1, vec2 pt2, vec2 iResolution) {
   float clrFactor = 0.0f;
   float tickness = 3.0f / max(iResolution.x, iResolution.y);
   float r = distance(uv, pt1) / distance(pt1, pt2);
-
   if(r <= 1.0f) {
     vec2 ptc = mix(pt1, pt2, r);
     float dist = distance(ptc, uv);
@@ -35,14 +34,13 @@ float line(vec2 uv, vec2 pt1, vec2 pt2, vec2 iResolution) {
 }
 
 void main() {
-
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
-  vec3 color = vec3(.5f, 0.7f, 1.0f);
+  vec3 color = vec3(1.0f, 0.2f, 1.0f);
   // float sum = 0.0f;
-  for(float i = 0.0f; i < 3.0f; i=i+0.01f) {
-    vec2 pX = vec2(0.5f + i, 0.5f);
-    vec2 pY = vec2(0.6f, 0.8f);
-    float line = line(uv, pX, pY, iResolution.xy);
+  for(float i = 0.0f; i < 1.0f; i=i+0.02f) {
+    vec2 p1 = vec2(-0.5f + iG + i*2.0, 0.0f);
+    vec2 p2 = vec2(-0.5f + iG + i*2.0,  1.f );
+    float line = line(uv, p1, p2, iResolution.xy);
     outColor += vec4(color * line, 1.f);
     if(i >= 3.0f) {
       break;
@@ -51,4 +49,6 @@ void main() {
   // outColor = vec4(color * lineFactor, 1.f);
   // outColor += vec4(color * lineFactor1, 1.f);
   // outColor.rgb *= color * lineFactor1;
+  vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1, 1, 1, 1);
+    outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
 }
