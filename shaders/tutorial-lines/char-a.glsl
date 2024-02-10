@@ -14,14 +14,9 @@ uniform float iXXX;
 uniform float iR;
 uniform float iG;
 uniform float iB;
+uniform int iAppStatus;
 
 out vec4 outColor;
-
-// The MIT License
-// Copyright © 2019 Inigo Quilez
-// Distance to an oriented box.
-// List of some other 2D distances: https://www.shadertoy.com/playlist/MXdSRf
-// and iquilezles.org/articles/distfunctions2d
 
 float sdOrientedBox(in vec2 p, in vec2 a, in vec2 b, float th) {
   float l = length(b - a);
@@ -32,40 +27,53 @@ float sdOrientedBox(in vec2 p, in vec2 a, in vec2 b, float th) {
   return length(max(q, 0.0f)) + min(max(q.x, q.y), 0.0f);
 }
 
+vec3 getColors (float d_2) {
+  vec3 col2 = vec3(1.0f) - sign(d_2) * vec3(0.1f, 0.4f, 0.7f);
+  col2 *= 1.0f - exp(-4.0f * abs(d_2));
+  col2 = mix(col2, vec3(1.0f), 1.0f - smoothstep(0.0f, 0.015f, abs(d_2)));
+  return col2;
+}
+
 void mainImage(out vec4 outColor, in vec2 fragCoord) {
-    // normalized pixel coordinates
+  // normalized pixel coordinates
   vec2 p = (2.0f * fragCoord - iResolution.xy) / iResolution.y;
   vec2 m = (2.0f * iMouse.xy - iResolution.xy) / iResolution.y;
 
-  p.xy *= 1.0f;
-  m *= 1.f;
+  p.xy *=0.7f;
+  m *= 0.2f;
 
   // animation
-  vec2 v1 = cos(0.0f * 0.1f + vec2(0.0f, 1.00f) + 0.0f);
-
-  vec2 v2 = cos(0.0f * 0.1f + vec2(0.0f, 3.00f) + 2.5f);
-
-  float th = 0.1f * (0.5f + 0.5f * cos(0.0f * 1.1f + 1.0f));
-
+  vec2 v1 = cos(vec2(1.56f, 1.3f));
+  vec2 v2 = cos(vec2(1.4f, 1.8f));
+  float th = 0.1f * (0.2f + iB * cos(0.0f * 1.1f + 1.0f));
   float d = sdOrientedBox(p, v1, v2, th);
 
-    // distance
-  vec3 col = vec3(1.0f) - sign(d) * vec3(0.1f, 0.4f, 0.7f);
-  col *= 1.0f - exp(-4.0f * abs(d));
-  // col *= 0.8f + 0.2f * cos(120.0f * d);
-  col = mix(col, vec3(1.0f), 1.0f - smoothstep(0.0f, 0.015f, abs(d)));
+  vec2 v1_2 = cos(vec2(1.56f, 1.3f) );
+  vec2 v2_2 = cos(vec2(1.7f, 1.8f) );
+  float d_2 = sdOrientedBox(p, v1_2, v2_2, th);
 
-  // if(iMouse.z > 0.001f) {
-  //   d = sdOrientedBox(m, v1, v2, th);
-  //   col = mix(col, vec3(1.0f, 1.0f, 0.0f), 1.0f - smoothstep(0.0f, 0.005f, abs(length(p - m) - abs(d)) - 0.0025f));
-  //   col = mix(col, vec3(1.0f, 1.0f, 0.0f), 1.0f - smoothstep(0.0f, 0.005f, length(p - m) - 0.015f));
-  // }
+  vec2 v1_3 = cos(vec2(1.45f, 1.55f) );
+  vec2 v2_3 = cos(vec2(1.7f, 1.77f) );
+  float d_3 = sdOrientedBox(p, v1_3, v2_3, th);
+
+  // distance 1
+  vec3 col =  getColors(d);
+  // distance 2
+  vec3 col2 = getColors(d_2);
+  vec3 col3 = getColors(d_3);
+  col = mix(col, col2, 0.5f);
+  // col = mix(col, col3, 0.5f);
 
   outColor = vec4(col, 1.0f);
+
+  outColor += vec4(col3, 1.0f);
 }
 
 void main() {
   vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1, 1, 1, 1);
-  mainImage(outColor, gl_FragCoord.xy);
-  // outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
+  if (iAppStatus > 1) {
+    outColor.rgb = vec3(textureColor.rgb * vLightWeighting);
+  } else {
+    mainImage(outColor, gl_FragCoord.xy);
+  }
 }

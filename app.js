@@ -19,8 +19,17 @@ function webGLStart() {
   byId('canvas').style.position = 'unset'
   byId('MYHOLDER').append(byId('canvas'))
 
+  document.addEventListener("keydown", (e)=> {
+     if(e.type=="keydown" && e.code == 'F2'){
+      console.log(e)
+      // e.keyCode;
+      // e.charCode;
+      byId('compileBtn').click()
+     }
+  },false); 
+
   world.callReDraw();
-  runThis(world, 'shaders/tutorial-lines/char-a.glsl');
+  runThis(world, 'shaders/tutorial-lines/simple-lines.glsl');
 
   window.dropShaderList = (a) => {
     document.getElementById("myDropdown" + a).classList.toggle("show");

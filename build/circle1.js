@@ -19,8 +19,16 @@ function webGLStart() {
   world = matrixEngine.matrixWorld.defineworld(canvas);
   (0, _utility.byId)('canvas').style.position = 'unset';
   (0, _utility.byId)('MYHOLDER').append((0, _utility.byId)('canvas'));
+  document.addEventListener("keydown", e => {
+    if (e.type == "keydown" && e.code == 'F2') {
+      console.log(e);
+      // e.keyCode;
+      // e.charCode;
+      (0, _utility.byId)('compileBtn').click();
+    }
+  }, false);
   world.callReDraw();
-  (0, _cube.runThis)(world, 'shaders/tutorial-lines/char-a.glsl');
+  (0, _cube.runThis)(world, 'shaders/tutorial-lines/simple-lines.glsl');
   window.dropShaderList = a => {
     document.getElementById("myDropdown" + a).classList.toggle("show");
   };
@@ -37472,17 +37480,18 @@ var runThis = (world, shaderPath) => {
     promiseMyShader.then(d => {
       _utility.scriptManager.LOAD(d, "custom-circle-shader-fs", "x-shader/x-fragment", "shaders", () => {
         App.scene.MyCubeTex.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
-
         // add own uniforms...
         App.scene.MyCubeTex.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iXXX");
         App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
         App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
+        App.scene.MyCubeTex.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iAppStatus");
       });
       (0, _utility.byId)('myShader').value = d;
     });
   };
   canvas.addEventListener('mousedown', ev => {
+    console.log(ev);
     matrixEngine.raycaster.checkingProcedure(ev);
   });
   addEventListener("ray.hit.event", function (e) {
@@ -37491,7 +37500,7 @@ var runThis = (world, shaderPath) => {
     e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2);
     console.info(e.detail);
   });
-  world.Add("cubeLightTex", 1, "MyCubeTex", {
+  world.Add("squareTex", 1, "MyCubeTex", {
     source: ["assets/textures/1.png"],
     mix_operation: "multiply"
   });
@@ -37508,22 +37517,26 @@ var runThis = (world, shaderPath) => {
         App.scene.MyCubeTex.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iR");
         App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
+        App.scene.MyCubeTex.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iAppStatus");
         setTimeout(() => {
           (0, _utility.byId)('compileBtn').disabled = false;
         }, 1600);
       });
     }
   });
+  App.scene.MyCubeTex.SHADER_APP_STATUS = 0;
   App.loadCircleBase(shaderPath);
 
   // IMPORTANT - override draw func for `App.scene.MyCubeTex`.
   App.scene.MyCubeTex.type = "custom-";
   var osc_r = new OSCILLATOR(0, 2, 0.001);
   var osc_g = new OSCILLATOR(0, 1, 0.001);
-  var osc_b = new OSCILLATOR(0, 0.5, 0.0001);
+  var osc_b = new OSCILLATOR(0, 0.1, 0.01);
   var osc_variable = new OSCILLATOR(0, 150, 1);
-  App.scene.MyCubeTex.glBlend.blendEnabled = true;
-  App.scene.MyCubeTex.rotation.rotationSpeed.y = 10;
+
+  // App.scene.MyCubeTex.glBlend.blendEnabled = true
+  // App.scene.MyCubeTex.rotation.rotationSpeed.y = 10;
+
   App.scene.MyCubeTex.LightsData.ambientLight.set(1, 1, 1);
   var now = 1,
     time1 = 0,
@@ -37544,6 +37557,7 @@ var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE());
+    world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.MyCubeTex.SHADER_APP_STATUS);
   };
   App.scene.MyCubeTex.drawCustom = function (o) {
     return matrixEngine.standardMEShaderDrawer(o);
