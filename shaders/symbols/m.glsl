@@ -36,7 +36,7 @@ float line(vec2 uv, vec2 pt1, vec2 pt2, vec2 iResolution) {
   return clrFactor;
 }
 
-void createLines() {
+void createStripLines() {
 
 }
 
