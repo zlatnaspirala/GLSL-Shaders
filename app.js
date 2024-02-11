@@ -29,7 +29,7 @@ function webGLStart() {
   },false); 
 
   world.callReDraw();
-  runThis(world, 'shaders/tutorial-lines/myloops-lines.glsl');
+  runThis(world, 'shaders/symbols/m.glsl');
 
   window.dropShaderList = (a) => {
     document.getElementById("myDropdown" + a).classList.toggle("show");
