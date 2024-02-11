@@ -4,6 +4,17 @@ let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
 export var runThis = (world, shaderPath) => {
 
+  // Test loading 2d plot data from unifroms 
+  
+  var myshaderDrawData = [
+   0.5, 0.7,
+   0.62, 0.3,
+   0.5, 0.7,
+   0.38, 0.3,
+   0.43, 0.46,
+   0.57, 0.46];
+ //  alert(myVectorJS)
+
   App.loadCircleBase = (shaderPath) => {
     console.log("audios 2")
     // var p = document.getElementById('hoverFX').play()
@@ -20,6 +31,9 @@ export var runThis = (world, shaderPath) => {
         App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
         App.scene.MyCubeTex.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iAppStatus");
+
+        App.scene.MyCubeTex.shaderProgram.myshaderDrawData = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "myshaderDrawData");
+        
       })
       byId('myShader').value = d;
     })
@@ -60,6 +74,9 @@ export var runThis = (world, shaderPath) => {
         App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
         App.scene.MyCubeTex.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iAppStatus");
+
+        App.scene.MyCubeTex.shaderProgram.myshaderDrawData = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "myshaderDrawData");
+
         setTimeout(() => {
           byId('compileBtn').disabled = false;
         }, 1600)
@@ -106,7 +123,8 @@ export var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE())
 
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.MyCubeTex.SHADER_APP_STATUS)
-    
+    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 2, 6)
+
   }
 
   App.scene.MyCubeTex.drawCustom = function(o) {

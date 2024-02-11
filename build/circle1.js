@@ -37471,6 +37471,11 @@ function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return 
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = (world, shaderPath) => {
+  // Test loading 2d plot data from unifroms 
+
+  var myshaderDrawData = [0.5, 0.7, 0.62, 0.3, 0.5, 0.7, 0.38, 0.3, 0.43, 0.46, 0.57, 0.46];
+  //  alert(myVectorJS)
+
   App.loadCircleBase = shaderPath => {
     console.log("audios 2");
     // var p = document.getElementById('hoverFX').play()
@@ -37486,6 +37491,7 @@ var runThis = (world, shaderPath) => {
         App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
         App.scene.MyCubeTex.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iAppStatus");
+        App.scene.MyCubeTex.shaderProgram.myshaderDrawData = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "myshaderDrawData");
       });
       (0, _utility.byId)('myShader').value = d;
     });
@@ -37518,6 +37524,7 @@ var runThis = (world, shaderPath) => {
         App.scene.MyCubeTex.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iG");
         App.scene.MyCubeTex.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iB");
         App.scene.MyCubeTex.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "iAppStatus");
+        App.scene.MyCubeTex.shaderProgram.myshaderDrawData = world.GL.gl.getUniformLocation(App.scene.MyCubeTex.shaderProgram, "myshaderDrawData");
         setTimeout(() => {
           (0, _utility.byId)('compileBtn').disabled = false;
         }, 1600);
@@ -37558,6 +37565,7 @@ var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE());
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.MyCubeTex.SHADER_APP_STATUS);
+    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 2, 6);
   };
   App.scene.MyCubeTex.drawCustom = function (o) {
     return matrixEngine.standardMEShaderDrawer(o);

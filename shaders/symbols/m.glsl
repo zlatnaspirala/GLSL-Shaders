@@ -5,6 +5,8 @@ in vec2 vTextureCoord;
 in vec3 vLightWeighting;
 uniform sampler2D uSampler;
 
+uniform float[12] myshaderDrawData;
+
 uniform vec2 iResolution;
 uniform float iTime;
 uniform float iTimeDelta;
@@ -21,7 +23,7 @@ out vec4 outColor;
 
 float line(vec2 uv, vec2 pt1, vec2 pt2, vec2 iResolution) {
   float clrFactor = 0.1f;
-  float tickness = iXXX*0.1 / max(iResolution.x, iResolution.y);
+  float tickness = iXXX * 0.1f / max(iResolution.x, iResolution.y);
   float r = distance(uv, pt1) / distance(pt1, pt2);
 
   float r2 = distance(uv, pt2) / distance(pt2, pt1);
@@ -36,33 +38,48 @@ float line(vec2 uv, vec2 pt1, vec2 pt2, vec2 iResolution) {
   return clrFactor;
 }
 
-void createStripLines() {
-
+// for matrix-engine - loading strip line data.
+void createStripLines(out vec4 outColor, vec2[6] mePoints) {
+  vec2 uv = gl_FragCoord.xy / iResolution.xy;
+  vec3 color = vec3(.5f, 0.7f, 1.0f);
+  for(int i = 0; i < mePoints.length();i = i + 2) {
+    // int i = 0;
+    float lf = line(uv, mePoints[i], mePoints[i+1], iResolution.xy);
+    outColor += vec4(color * lf, 1.f);
+  }
 }
 
-void main() {
-  vec2 uv = gl_FragCoord.xy / iResolution.xy; // current point
+// for matrix-engine - loading strip line data.
+void createStripLinesF(out vec4 outColor, in float[12] mePoints) {
+  vec2 uv = gl_FragCoord.xy / iResolution.xy;
+  vec3 color = vec3(.5f, 0.7f, 1.0f);
+  for(int i = 0; i < mePoints.length();i = i + 4) {
+    // int i = 0;
+    float lf = line(uv, vec2(mePoints[i], mePoints[i+1]), vec2(mePoints[i+2], mePoints[i+4]), iResolution.xy);
+    outColor += vec4(color * lf, 1.f);
+  }
+}
 
+
+void main() {
+  // vec2 uv = gl_FragCoord.xy / iResolution.xy; // current point
   vec2 pt1 = vec2(0.5f, 0.7f);
   vec2 pt2 = vec2(0.62f, 0.3f);
-
   vec2 pt11 = vec2(0.5f, 0.7f);
   vec2 pt21 = vec2(0.38f, 0.3f);
-
   vec2 pt12 = vec2(0.43f, 0.46f);
   vec2 pt22 = vec2(0.57f, 0.46f);
+  //  1.2 1.3 support
+  // const float mePoints[4] = float[4](0.5f, 0.7f, 0.62f, 0.3f);
 
-  float lineFactor = line(uv, pt1, pt2, iResolution.xy);
-  float lineFactor1 = line(uv, pt11, pt21, iResolution.xy);
-  float lineFactor2 = line(uv, pt12, pt22, iResolution.xy);
-  vec3 color = vec3(.5f, 0.7f, 1.0f);
+  vec2 mePoints[] = vec2[6](pt1, pt2, pt11, pt21, pt12, pt22);
+
+  // working - draw from shader inline data
+  // createStripLines(outColor, mePoints);
+ 
+  createStripLinesF(outColor, myshaderDrawData);
+  
 
   vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1, 1, 1, 1);
-
-  outColor = vec4(color * lineFactor, 1.f);
-  outColor += vec4(color * lineFactor1, 1.f);
-  outColor += vec4(color * lineFactor2, 1.f);
-
   outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
-  // outColor.rgb *= color * lineFactor1;
 }

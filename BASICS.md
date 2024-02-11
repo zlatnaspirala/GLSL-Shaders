@@ -1,5 +1,58 @@
 # GLSL
 
+
+
+### Source : https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)
+
+```glsl
+Array constructors
+Arrays can be constructed using array constructor syntax. In this case, the type also contains the [] array notation:
+
+ const float array[3] = float[3](2.5, 7.0, 1.5);
+The size is not necessary for array constructors, as the size is implicitly specified by the number of arguments to the constructor.
+
+Struct constructors
+Structs are constructed by filling in their values in the order in which they are defined. For example:
+
+struct Data
+{
+  float first;
+  vec2 second;
+};
+
+Data dataValue = Data(1.4, vec2(16.0, 22.5));
+Notice the vector constructor in the middle of the struct constructor. Constructors can be nested. So if you have an array of structs of the above type, you can construct it as follows:
+
+Data dataArray[3] = Data[3](
+  Data(1.0, vec2(-19.0, 4.5)),
+  Data(-3.0, vec2(2.718, 2.0)),
+  Data(29.5, vec2(3.142, 3.333)));
+
+```
+
+
+For arrays : 
+### source : https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/uniform
+
+Parameters
+location
+A WebGLUniformLocation object containing the location of the uniform attribute to modify.
+
+value, v0, v1, v2, v3
+A new value to be used for the uniform variable. Possible types:
+
+A floating point Number for floating point values (methods with "f").
+A sequence of floating point numbers (for example a Float32Array or an Array of numbers) for floating point vector methods (methods with "fv").
+An integer Number for integer values (methods with "i").
+An Int32Array for integer vector methods (methods with "iv").
+
+
+More for arrays:
+
+### source: https://copyprogramming.com/howto/passing-arrays-of-off-length-to-gl-uniform3fv#passing-arrays-of-off-length-to-gluniform3fv
+
+
+
 ### source: https://webglfundamentals.org/webgl/lessons/webgl-shaders-and-glsl.html
 
 GLSL stands for Graphics Library Shader Language. It's the language shaders are written in. It has some special semi unique features that are certainly not common in JavaScript. It's designed to do the math that is commonly needed to compute things for rasterizing graphics. So for example it has built in types like vec2, vec3, and vec4 which represent 2 values, 3 values, and 4 values respectively. Similarly it has mat2, mat3 and mat4 which represent 2x2, 3x3, and 4x4 matrices. You can do things like multiply a vec by a scalar.
@@ -159,5 +212,9 @@ The following are not constant expressions:
 - User-defined functions
 - Uniforms, attributes and varyings.
 
-TEST THIS
+ TEST THIS
 https://stackoverflow.com/questions/63992743/breaking-out-of-glsl-loops-via-a-uniform
+
+
+ Test this 
+ https://relativity.net.au/gaming/glsl/Structures.html
