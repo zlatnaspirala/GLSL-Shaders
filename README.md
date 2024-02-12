@@ -4,6 +4,8 @@
 Build shaders from zero. Prefered webGL2/opengles300
 Web oriented project.
 Corresponding with the project matrix-engine.
+After all this project will become part of matrix-engine buildin custom shaders feature.
+
 
 ## Reference
 

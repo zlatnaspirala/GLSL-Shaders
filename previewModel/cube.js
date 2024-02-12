@@ -1,18 +1,12 @@
 import * as matrixEngine from "matrix-engine";
 import {byId, scriptManager} from "matrix-engine/lib/utility";
+import {geometryLines} from "../assets/matrix-shaders-params/geometry-lines";
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
 export var runThis = (world, shaderPath) => {
 
-  // Test loading 2d plot data from unifroms 
-  
-  var myshaderDrawData = [
-   0.5, 0.7,
-   0.62, 0.3,
-   0.5, 0.7,
-   0.38, 0.3,
-   0.43, 0.46,
-   0.57, 0.46];
+  // Test loading 2d plot data from unifroms.
+  var myshaderDrawData = geometryLines.charP;
  //  alert(myVectorJS)
 
   App.loadCircleBase = (shaderPath) => {
@@ -54,8 +48,8 @@ export var runThis = (world, shaderPath) => {
     console.info(e.detail);
   });
 
-
-  world.Add("squareTex", 1, "MyCubeTex", {
+  // squareTex
+  world.Add("cubeLightTex", 1, "MyCubeTex", {
     source: ["assets/textures/1.png"],
     mix_operation: "multiply",
   });
@@ -100,6 +94,18 @@ export var runThis = (world, shaderPath) => {
   // App.scene.MyCubeTex.glBlend.blendEnabled = true
   // App.scene.MyCubeTex.rotation.rotationSpeed.y = 10;
 
+  byId('ambientLightR').addEventListener('change', (e) => {
+    console.log(e.target.value)
+    App.scene.MyCubeTex.LightsData.ambientLight.r =e.target.value;
+  })
+  byId('ambientLightG').addEventListener('change', (e) => {
+    console.log(e.target.value)
+    App.scene.MyCubeTex.LightsData.ambientLight.g =e.target.value;
+  })
+  byId('ambientLightB').addEventListener('change', (e) => {
+    console.log(e.target.value)
+    App.scene.MyCubeTex.LightsData.ambientLight.b =e.target.value;
+  })
   App.scene.MyCubeTex.LightsData.ambientLight.set(1, 1, 1);
   var now = 1, time1 = 0, then1 = 0;
 
@@ -123,7 +129,7 @@ export var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE())
 
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.MyCubeTex.SHADER_APP_STATUS)
-    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 2, 6)
+    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 0, 12)
 
   }
 

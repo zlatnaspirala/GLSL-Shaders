@@ -4,7 +4,8 @@
   "description": "Free GLSL Shaders",
   "main": "index.js",
   "scripts": {
-    "app": "watchify App.js -p [esmify --noImplicitAny] -o build/circle1.js | echo 'circle1.js build pack name.'"
+    "app": "watchify App.js -p [esmify --noImplicitAny] -o build/circle1.js | echo 'circle1.js build pack name.'",
+    "get": "cd ./tools/ & node get-shaders.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/zlatnaspirala/GLSL-Shaders#readme",
   "dependencies": {
+    "fs": "0.0.1-security",
     "matrix-engine": "^1.9.53"
   },
   "devDependencies": {

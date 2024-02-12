@@ -60,6 +60,13 @@
         <div style="display: grid;">
           <button onclick="dropShaderList(2)" class="dropbtn2">More</button>
           <div id="myDropdown2" class="dropdown-content2">
+            <span class="" onmouseover="" onclick="">
+              <div> <div>Ambient light</div>
+                Red <input type="range" id="ambientLightR" name="ambientLightR" min="0" max="1" value="0" step="0.05" />
+                Green <input type="range" id="ambientLightG" name="ambientLightG" min="0" max="1" value="0" step="0.05" />
+                Blue <input type="range" id="ambientLightB" name="ambientLightB" min="0" max="1" value="0" step="0.05" />
+              </div>
+            </span>
             <span class="dropbtn2" onmouseover="" onclick="App.scene.MyCubeTex.glBlend.blendEnabled=!App.scene.MyCubeTex.glBlend.blendEnabled;">Blending</span>
             <span class="dropbtn2" onmouseover="" onclick="alert(`The MIT License - Copyright © 2024 Nikola Lukic \n Loaded in matrix-engine webGL render. Tutorial Origin from The MIT License - Copyright © 2020 Inigo Quilez.`)">About</span>
           </div>

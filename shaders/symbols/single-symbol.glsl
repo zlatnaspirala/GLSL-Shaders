@@ -5,6 +5,7 @@ in vec2 vTextureCoord;
 in vec3 vLightWeighting;
 uniform sampler2D uSampler;
 
+// Standard matrix-engine CUSTOM shader params
 uniform float[12] myshaderDrawData;
 
 uniform vec2 iResolution;
@@ -39,7 +40,7 @@ float line(vec2 uv, vec2 pt1, vec2 pt2, vec2 iResolution) {
 }
 
 // for matrix-engine - loading strip line data.
-void createStripLines(out vec4 outColor, vec2[6] mePoints) {
+void createStripLines(out vec4 outColor, vec2[4] mePoints) {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
   vec3 color = vec3(.5f, 0.7f, 1.0f);
   for(int i = 0; i < mePoints.length();i = i + 2) {
@@ -50,36 +51,40 @@ void createStripLines(out vec4 outColor, vec2[6] mePoints) {
 }
 
 // for matrix-engine - loading strip line data.
+// For no no solution for SIZE ARRAY - must be adaptedd manually
 void createStripLinesF(out vec4 outColor, in float[12] mePoints) {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
   vec3 color = vec3(.5f, 0.7f, 1.0f);
   for(int i = 0; i < mePoints.length();i = i + 4) {
     // int i = 0;
-    float lf = line(uv, vec2(mePoints[i], mePoints[i+1]), vec2(mePoints[i+2], mePoints[i+4]), iResolution.xy);
+    float lf = line(uv, vec2(mePoints[i], mePoints[i+1]), vec2(mePoints[i+2], mePoints[i+3]), iResolution.xy);
     outColor += vec4(color * lf, 1.f);
   }
 }
 
-
 void main() {
-  // vec2 uv = gl_FragCoord.xy / iResolution.xy; // current point
+  // INLINE DATA
   vec2 pt1 = vec2(0.5f, 0.7f);
-  vec2 pt2 = vec2(0.62f, 0.3f);
-  vec2 pt11 = vec2(0.5f, 0.7f);
-  vec2 pt21 = vec2(0.38f, 0.3f);
-  vec2 pt12 = vec2(0.43f, 0.46f);
-  vec2 pt22 = vec2(0.57f, 0.46f);
-  //  1.2 1.3 support
+  vec2 pt2 = vec2(0.5f, 0.3f);
+  // vec2 pt11 = vec2(0.38f, 0.5f);
+  // vec2 pt21 = vec2(0.38f, 0.5f);
+  vec2 pt12 = vec2(0.3f, 0.66f);
+  vec2 pt22 = vec2(0.8f, 0.66f);
+  // vec2 pt13 = vec2(0.64f, 0.65f);
+  // vec2 pt23 = vec2(0.48f, 0.46f);
+  // GLSL 1.2/1.3 support
   // const float mePoints[4] = float[4](0.5f, 0.7f, 0.62f, 0.3f);
-
-  vec2 mePoints[] = vec2[6](pt1, pt2, pt11, pt21, pt12, pt22);
-
-  // working - draw from shader inline data
+  // vec2 mePoints[] = vec2[6](pt1, pt2, pt12, pt22, pt13, pt23);
+  // INLINE DATA
+  vec2 mePoints[] = vec2[4](pt1, pt2, pt12, pt22);
+  // Draw from shader inline data
   // createStripLines(outColor, mePoints);
- 
-  createStripLinesF(outColor, myshaderDrawData);
-  
 
+  // Draw from uniforms (from program)
+  // FROM UNIFORM - From program (js)
+  createStripLinesF(outColor, myshaderDrawData);
+
+  // Mix with standard matrix-engine texture sampler
   vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1, 1, 1, 1);
   outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
 }

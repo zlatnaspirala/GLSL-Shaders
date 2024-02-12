@@ -29,7 +29,7 @@ function webGLStart() {
   },false); 
 
   world.callReDraw();
-  runThis(world, 'shaders/symbols/m.glsl');
+  runThis(world, 'shaders/symbols/single-symbol.glsl');
 
   window.dropShaderList = (a) => {
     document.getElementById("myDropdown" + a).classList.toggle("show");
