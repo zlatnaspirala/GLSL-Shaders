@@ -28,7 +28,7 @@ function webGLStart() {
     }
   }, false);
   world.callReDraw();
-  (0, _cube.runThis)(world, 'shaders/symbols/single-symbol.glsl');
+  (0, _cube.runThis)(world, 'shaders/fbm/test2.glsl');
   window.dropShaderList = a => {
     document.getElementById("myDropdown" + a).classList.toggle("show");
   };
@@ -83,7 +83,12 @@ let geometryLines = exports.geometryLines = {
   charY: [0.5, 0.5, 0.5, 0.3, 0.36, 0.65, 0.52, 0.46, 0.64, 0.65, 0.48, 0.46],
   charT: [0.5, 0.7, 0.5, 0.3, 0.3, 0.66, 0.7, 0.66],
   charX: [0.4, 0.7, 0.6, 0.3, 0.4, 0.3, 0.6, 0.7],
-  charP: [0.35, 0.66, 0.6, 0.5, 0.4, 0.3, 0.4, 0.7, 0.35, 0.43, 0.6, 0.55]
+  charP: [0.35, 0.67, 0.6, 0.51, 0.4, 0.25, 0.4, 0.7, 0.35, 0.44, 0.6, 0.54],
+  charR: [0.35, 0.67, 0.6, 0.51, 0.4, 0.25, 0.4, 0.7, 0.35, 0.44, 0.6, 0.54, 0.35, 0.47, 0.6, 0.29],
+  charB: [0.35, 0.67, 0.6, 0.51, 0.4, 0.25, 0.4, 0.7, 0.35, 0.44, 0.6, 0.54, 0.35, 0.5, 0.6, 0.37, 0.35, 0.28, 0.6, 0.4],
+  charE: [0.35, 0.64, 0.6, 0.64, 0.4, 0.28, 0.4, 0.69, 0.35, 0.49, 0.55, 0.49, 0.35, 0.33, 0.6, 0.33],
+  charN: [0.6, 0.28, 0.6, 0.69, 0.4, 0.28, 0.4, 0.69, 0.6, 0.28, 0.4, 0.69],
+  charI: [0.5, 0.28, 0.5, 0.69]
 };
 
 },{}],3:[function(require,module,exports){
@@ -37498,7 +37503,7 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = (world, shaderPath) => {
   // Test loading 2d plot data from unifroms.
-  var myshaderDrawData = _geometryLines.geometryLines.charP;
+  var myshaderDrawData = _geometryLines.geometryLines.charI;
   //  alert(myVectorJS)
 
   App.loadCircleBase = shaderPath => {
@@ -37604,7 +37609,7 @@ var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE());
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.MyCubeTex.SHADER_APP_STATUS);
-    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 0, 12);
+    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 0, 4);
   };
   App.scene.MyCubeTex.drawCustom = function (o) {
     return matrixEngine.standardMEShaderDrawer(o);

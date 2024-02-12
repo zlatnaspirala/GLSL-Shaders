@@ -6,7 +6,7 @@ let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 export var runThis = (world, shaderPath) => {
 
   // Test loading 2d plot data from unifroms.
-  var myshaderDrawData = geometryLines.charP;
+  var myshaderDrawData = geometryLines.charI;
  //  alert(myVectorJS)
 
   App.loadCircleBase = (shaderPath) => {
@@ -129,8 +129,7 @@ export var runThis = (world, shaderPath) => {
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE())
 
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.MyCubeTex.SHADER_APP_STATUS)
-    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 0, 12)
-
+    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 0, 4)
   }
 
   App.scene.MyCubeTex.drawCustom = function(o) {

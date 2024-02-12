@@ -6,7 +6,7 @@ in vec3 vLightWeighting;
 uniform sampler2D uSampler;
 
 // Standard matrix-engine CUSTOM shader params
-uniform float[12] myshaderDrawData;
+uniform float[20] myshaderDrawData;
 
 uniform vec2 iResolution;
 uniform float iTime;
@@ -52,7 +52,7 @@ void createStripLines(out vec4 outColor, vec2[4] mePoints) {
 
 // for matrix-engine - loading strip line data.
 // For no no solution for SIZE ARRAY - must be adaptedd manually
-void createStripLinesF(out vec4 outColor, in float[12] mePoints) {
+void createStripLinesF(out vec4 outColor, in float[20] mePoints) {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
   vec3 color = vec3(.5f, 0.7f, 1.0f);
   for(int i = 0; i < mePoints.length();i = i + 4) {

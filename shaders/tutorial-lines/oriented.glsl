@@ -37,12 +37,12 @@ void mainImage(out vec4 outColor, in vec2 fragCoord) {
   vec2 p = (2.0f * fragCoord - iResolution.xy) / iResolution.y;
   vec2 m = (2.0f * iMouse.xy - iResolution.xy) / iResolution.y;
 
-  p *= 0.7f;
+  p *= 1.7f;
   m *= 1.f;
 
   // animation
-  vec2 v1 = cos(45.0f * 0.5f + vec2(0.0f, 1.00f) + 0.0f);
-  vec2 v2 = cos(90.0f * 0.5f + vec2(0.0f, 3.00f) + 1.5f);
+  vec2 v1 = cos(iXXX * 0.5f + vec2(0.0f, 1.00f) + 0.0f);
+  vec2 v2 = cos(0.0f * 0.5f + vec2(0.0f, 3.00f) + 1.5f);
   float th = 0.3f * (0.5f + 0.5f * cos(0.0f * 1.1f + 1.0f));
 
   float d = sdOrientedBox(p, v1, v2, th);
