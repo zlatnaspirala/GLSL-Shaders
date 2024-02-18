@@ -29,7 +29,7 @@ function webGLStart() {
   },false); 
 
   world.callReDraw();
-  runThis(world, 'shaders/fbm/test2.glsl');
+  runThis(world, 'shaders/glslsandbox/lights.glsl');
 
   window.dropShaderList = (a) => {
     document.getElementById("myDropdown" + a).classList.toggle("show");
