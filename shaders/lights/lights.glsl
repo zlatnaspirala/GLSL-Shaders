@@ -2,6 +2,7 @@
 precision highp float;
 // Standard matrix-engine params
 // Special combine matrix-engine VS out v_surfaceToLight - coming from spot lighr
+// Origin found at from https://glslsandbox.com/e#109700.0
 in vec2 vTextureCoord;
 in vec3 v_surfaceToLight;
 in vec3 vLightWeighting;
@@ -17,7 +18,7 @@ uniform float iXXX;
 out vec4 outColor;
 
 #define PI 3.14159265358979
-#define N 60
+#define N 10
 
 vec3 circle(vec2 pos,float size,vec3 color){
 	return color * size / distance(pos,v_surfaceToLight.yx);
@@ -25,7 +26,7 @@ vec3 circle(vec2 pos,float size,vec3 color){
 
 void main(void){
 	float t = iXXX * 0.01;
-	float theta = 11.0;
+	float theta = 11.0 * iXXX * 0.01;
 	float r = 0.6;
 	vec2 pos = vec2(0.0);
 	vec3 color = vec3(0.0);
@@ -39,5 +40,7 @@ void main(void){
 		c.b = 0.09 * sin(float(i));
 		color += circle(pos,size,c);
 	}
+
+ 
 	outColor = vec4(color,1.0);
 }

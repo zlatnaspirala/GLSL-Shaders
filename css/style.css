@@ -149,6 +149,7 @@ background: linear-gradient(#72b352, #77b55a);
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   height: 20px;
   z-index: 3;
+  height: auto;
 }
 
 /* Links inside the dropdown */

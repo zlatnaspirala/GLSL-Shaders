@@ -28,7 +28,7 @@ function webGLStart() {
     }
   }, false);
   world.callReDraw();
-  (0, _cube.runThis)(world, 'shaders/glslsandbox/lights.glsl');
+  (0, _cube.runThis)(world, 'shaders/lights/lights.glsl');
   window.dropShaderList = a => {
     document.getElementById("myDropdown" + a).classList.toggle("show");
   };
